@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<script src="js.js"></script>
+<script>
+//    function isLikeArray(data){
+//        var len=data.length;
+//        return typeof len=="number"&&len>=0&&len-1 in data;
+//    }
+//    jquery.extend({
+//        makeArray:function(data){
+//            if(isLikeArray(data)){
+//                return jquery.merge([],data);
+//            }else{
+//                return [data];
+//            }
+//        }
+//    });
+    console.log($.makeArray(100));//[100]
+    console.log($.makeArray({0: "a", 1: "b", 2: "c", length: 3}));//[100]
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<script src="js.js"></script>
+<script>
+    var types="Number String Boolean Null Undefined Array RegExp Function Math Date Object".split(" ");
+    var class2type={};
+    for(var i=0;i<types.length;i++){
+        var type=types[i];
+        class2type["[object "+type+"]"]=type.toLocaleLowerCase();
+    }
+    jquery.extend({
+        isString:function(str){
+            return typeof str=="string";
+        },
+        isFunction:function(fun){
+            return typeof fun=="function";
+        },
+        //浏览器原生支持了isArray方法，但是es5之前没有，需要考虑到兼容新问题
+        isArray:Array.isArray||function(array){
+                       return jquery.type(array)=="array";
+
+        },
+        type:function(data){
+            return data==null?
+                    String(data):
+                    class2type[Object.prototype.toString.call(data)];
+        }
+    });
+
+    console.log($.isArray([1,3,5]));//true
+
+</script>
+</body>
+</html>

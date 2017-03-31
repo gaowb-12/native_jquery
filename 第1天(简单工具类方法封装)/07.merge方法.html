@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<script src="js.js"></script>
+<script>
+    //$.merge：实现合并2个数组或者伪数组
+
+    var target={0:"a",1:"b",2:"c",length:3};
+    var source={0:10,1:20,length:2};
+    jquery.extend({
+        merge:function(target,source){
+            var len=target.length;
+            for(var i=0;i<source.length;i++){
+                target[len]=source[i];
+                len++;
+            }
+            target.length=len;
+            return target;
+        }
+    });
+    console.log($.merge(target, source));
+</script>
+</body>
+</html>
