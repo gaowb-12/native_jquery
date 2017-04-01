@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>abd</div>
+<div>feg</div>
+<script src="js.js"></script>
+<script>
+    jquery.fn.extend({
+        before:function(){
+            var $pre=$(arguments[0]);
+            this.each(function(){
+                var next=this;
+                var parent=next.parentNode;
+                $pre.each(function(){
+                    parent.insertBefore(this.cloneNode(true),next);
+                })
+            });
+            return this;
+        },
+        after:function(){
+            var $next=$(arguments[0]);
+            this.each(function(){
+                var pre=this;
+                var parent=pre.parentNode;
+                var next=pre.nextSibling;
+                $next.each(function(){
+                    parent.insertBefore(this.cloneNode(true),next);
+                });
+            });
+            return this;
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="button" id="btn1" value="显示"/>
+<input type="button" id="btn2" value="隐藏"/>
+<div style="display:block;">前端22</div>
+<script src="js.js"></script>
+<script>
+    $.fn.extend({
+        css:function(){
+            //判断传入的实参的个数
+            var len=arguments.length;
+            var arg0=arguments[0];
+            var arg1=arguments[1];
+
+            if(len===0) return this;
+            //如果是一个参数
+            if(len==1){
+                if(jquery.isString(arg0)){
+                   return window.getComputedStyle(this[0],null)[arg0];
+                }else{
+                    return this.each(function(){
+                        $.extend(this.style,arg0);
+                    });
+                }
+            }else{
+                return this.each(function(){
+                    this.style[arg0]=arg1;
+                });
+            }
+
+        },
+        show:function(){
+           return this.css("display","block");
+        },
+        hide:function(){
+           return this.css("display","none");
+        },
+        toggle:function(){
+            //1、获取DOM元素
+            this.each(function(){
+                var dom=this;
+                var $dom=jquery(dom);
+                $dom[$dom.css("display")==="none"?"show":"hide"]();
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>abd</div>
+<div>feg</div>
+<script src="js.js"></script>
+<script>
+    jquery.fn.extend({
+        remove:function(){
+           return this.each(function(){
+                this.parentNode.removeChild(this);
+            });
+        }
+    });
+</script>
+</body>
+</html>

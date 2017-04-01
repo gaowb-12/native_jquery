@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<script src="js.js"></script>
+<script>
+
+    $.extend({
+        each:function(arr,callback){
+            var i,l=arr.length;
+            if(typeof l=="number"&&l>=0&&l-1 in arr){
+                for(i=0;i<l;){
+                    if(callback.call(arr[i],i,arr[i++])===false) break;
+                }
+            }else{
+                for(i in arr){
+                    if(callback.call(arr[i],i,arr[i++])===false) break;
+                }
+            }
+            return this;
+        }
+    });
+
+    var arr=[1,2,3,7,5];
+    var obj={name: "zhangsan", age: 20};
+    $.each(arr,function(i,v){
+        //让回调函数内部的this指向dom
+        if(v==3){
+            console.log(i);
+        }
+    });
+    $.each(obj,function(key,value){
+        console.log(key);
+        console.log(value);
+    });
+</script>
+</body>
+</html>

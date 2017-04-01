@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+</ul>
+<script src="js.js"></script>
+<script>
+    jquery.fn.extend({
+        each:function(callback){
+            jquery.each(this,callback);
+        }
+    });
+    //要实现这样的功能,方便DOM元素的操作
+    var lis=$("li");
+    lis.each(function(i,dom){
+        dom.style.backgroundColor="red";
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>abd</div>
+<div>feg</div>
+<script src="js.js"></script>
+<script>
+    jquery.extend({
+        insert:function(parent,child,isappend){
+            var $parent=$(parent);
+            var $child=$(child);
+            var set=isappend?"appendChild":"insertBefore";
+            $parent.each(function(){
+                var parent=this;
+                var child=parent.firstChild
+                $child.each(function(){
+                    parent[set](this.cloneNode(true),child);
+                });
+            });
+        }
+    });
+    jquery.fn.extend({
+        append:function(){//给父jQuery对象追加元素。
+            var child=arguments[0];
+            jquery.insert(this,child,true);
+            return this;
+        },
+        appendTo:function(){
+            var $parent=$(arguments[0]);
+            jquery.insert($parent,this,true);
+            return this;
+        },
+        prepend:function(){
+            //转化参数为jQuery对象
+            var $child=$(arguments[0]);
+            jquery.insert(this,$child);
+            return this;
+        },
+        prependTo:function(){
+            var $parent=$(arguments[0]);
+            jquery.insert($parent,this);
+            return this;
+        }
+    });
+</script>
+</body>
+</html>

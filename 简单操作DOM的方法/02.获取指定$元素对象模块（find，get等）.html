@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="button" id="btn1" value="显示"/>
+<input type="button" id="btn2" value="隐藏"/>
+<div>前端22</div>
+<script src="js.js"></script>
+<script>
+    $.fn.extend({
+        get:function(){
+            //需要根据传入的实参确定具体的DOM元素
+            var len=arguments.length;
+            var arg0=arguments[0];
+            //传入值为空时
+            if(len==0) return jQuery.makeArray(this);
+            //index大于0的实况
+            if(len==1){
+                return this[arg0>=0?arg0:this.length+arg0];
+//              return arg0>=0?this[arg0]:this[this.length+arg0];
+            }
+        },
+        first:function(){
+            return jquery(this.get(0));
+        },
+        last:function(){
+            return jquery(this.get(-1));
+        },
+        eq:function(index){
+            return jquery(this.get(index));
+        },
+        find:function(selector){
+            //定义一个$对象，接收获取的DOM元素
+            var $=jquery();//任然是伪数组，里面只有一个length属性
+            //遍历$对象，获取每个DOM元素中的需要的DOM对象
+            this.each(function(){
+                jquery.merge($,this.querySelectorAll(selector));
+            });
+            return $;
+        }
+    });
+</script>
+</body>
+</html>
