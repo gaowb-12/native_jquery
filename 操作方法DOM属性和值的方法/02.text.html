@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>前端</div>
+<div>22期</div>
+<p></p>
+<script src="js.js"></script>
+<script>
+    jquery.fn.extend({
+        //设置跟获取文本
+        text:function(text){
+            var str="";
+            this.each(function(){
+                if(text===undefined){
+                    str+=this.innerHTML;
+                    return;
+                };
+                this.innerHTML=text;
+            });
+            return text===undefined?str:this;
+        }
+    });
+    console.log($("p").text());
+</script>
+</body>
+</html>

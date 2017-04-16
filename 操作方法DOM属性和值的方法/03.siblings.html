@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>前端</div>
+<div>22期</div>
+<p></p>
+<script src="js.js"></script>
+<script>
+    jquery.extend({
+        //封装获取dom元素所有兄弟元素的函数,返回jQuery对象
+        elementSiblings:function(dom){
+            var $arr=jquery();
+            var parent=dom.parentNode;
+            var childs=parent.childNodes;
+            for(var i=0;i<childs.length;i++){//遍历所有的兄弟元素。
+                var child=childs[i];
+                if(child.nodeType==1&&child!=dom){//判断节点类型，并且排除自己
+                    [].push.call($arr,child);//借用数组的push方法
+                }
+            }
+            return $arr;//返回jquery对象
+        }
+    });
+    jquery.fn.extend({
+        indexOf:function(dom){//为了获取索引，也可以判断数组中是否有某个元素，返回相应的索引
+            var index=-1;
+            this.each(function(i){
+                if(this==dom){
+                    index=i;
+                    return false;
+                }
+            });
+            return index;
+        },
+        siblings:function(filter){
+            //两种情况：
+            var $siblings=jquery();//定义一个jQuery对象
+            this.each(function(){//遍历每一个dom元素
+                var sibs=jquery.elementSiblings(this)
+                sibs.each(function(){
+                    var dom=this;
+                    //要将该DOM元素插入$siblings中，要判断对象中是否存在该元素
+                    if($siblings.indexOf(dom)==-1){
+                        [].push.call($siblings,dom);
+                    }
+                })
+            });
+            //不传参，表示获取每一个dom元素所有的兄弟元素
+            if(!filter){
+                return $siblings;
+            }
+            //传入选择器或者是标签，表示获取每一个dom元素指定的兄弟元素
+            var $filters=jquery(filter);//获取页面上所有的filter，返回jQuery对象
+            var $filter=jquery();
+            //遍历所有的兄弟元素
+            $siblings.each(function(){
+                var sibling=this;
+                //遍历页面上所有的符合要求的jQuery对象
+                $filters.each(function(){
+                    if(sibling==this){
+                        [].push.call($filter,sibling);
+                    }
+                });
+            });
+            return $filter;
+        }
+    });
+    console.log($("p").siblings("div"));
+</script>
+</body>
+</html>

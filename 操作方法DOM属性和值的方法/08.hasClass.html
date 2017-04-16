@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div class="fe  c ab">前端</div>
+<div class="name  value wo">22期</div>
+<p></p>
+<input type="text" checked=true />
+<script src="js.js"></script>
+<script>
+    jquery.extend({
+        nextElementSiblings:function(dom){//获取DOM元素所有的兄弟元素。
+            var $siblings=jquery();//定义一个jQuery对象，接收所有的兄弟元素。
+            var parent=dom.parentNode;
+            var childs=parent.childNodes;
+            for(var i=0;i<childs.length;i++){
+                var child=childs[i];
+                if(child.nodeType==1&&child!=dom){
+                    [].push.call($siblings,child);
+                }
+            }
+            return $siblings;
+        }
+    });
+    jquery.fn.extend({
+        indexOf:function(dom){//判断jQuery对象中是否有某DOM元素，返回其索引
+            var index=-1;
+            this.each(function(i,v){//遍历
+                if(v==dom){
+                    index=i;
+                    return false;
+                }
+            });
+            return index;
+        },
+        siblings:function(){
+            //获取每一个DOM元素所有的兄弟元素
+            var $siblings=jquery();
+            var arr=[];
+            this.each(function(){
+                //获取每一个DOM元素所有的兄弟元素。
+                var $sibling=jquery.nextElementSiblings(this);
+                $sibling.each(function(){
+                    if($siblings.indexOf(this)==-1){
+                        arr.push.call($siblings,this);
+                    }
+                });
+            });
+            return $siblings;
+        },
+        hasClass:function(Name){
+            var flag=false;
+            this.each(function(){
+                var classNames=" "+this.className+" ";
+                var className=" "+Name+" ";
+                if(classNames.indexOf(className)>-1){
+                    flag=true;
+                    return false;
+                }
+            });
+            return flag;
+        },
+        hasClass1:function(className){
+            //判断每一个DOM元素是否有此类名，只要有一个有就返回true
+            var flag=false;
+            this.each(function(){
+                var classNames=this.className.split(" ");
+                var $classNames=jquery.merge(jquery(),classNames);
+                if($classNames.indexOf(className)>-1){
+                    flag=true;
+                    return false;
+                }
+            });
+            return flag;
+        }
+    });
+    console.log($("div").hasClass("wo"));
+
+</script>
+</body>
+</html>

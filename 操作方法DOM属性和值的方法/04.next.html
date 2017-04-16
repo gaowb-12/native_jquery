@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>前端</div>
+<div>22期</div>
+<p></p>
+<script src="js.js"></script>
+<script>
+    jquery.extend({
+        //封装获取dom元素所有兄弟元素的函数,返回jQuery对象
+        nextElementSibling:function(dom){
+            var next=dom.nextSibling;
+            if(next==null) return null;
+            if(next.nodeType==1) return next;
+            return jquery.nextElementSibling(next);//返回jquery对象
+        }
+    });
+    jquery.fn.extend({
+        next:function(filter){
+            //两种情况
+            var $nextElementSibing=jquery();
+            this.each(function(){
+                [].push.call($nextElementSibing,jquery.nextElementSibling(this));
+            })
+            //如果不穿参数，获取每一个dom下一个兄弟元素组成的jQuery对象
+            if(!filter) return $nextElementSibing;
+            //如果传入参数，表示获取每一个dom元素下一个指定的元素
+            var $filters=jquery(filter);
+            var $filter=jquery();
+            $nextElementSibing.each(function(){
+                var nextElement=this;
+                $filters.each(function(){
+                    if(nextElement==this){
+                        [].push.call($filter,this);
+                    }
+                });
+            });
+            return $filter;
+        }
+    });
+    console.log($("p").next());
+</script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+    <p>22</p>
+</div>
+<script src="js.js"></script>
+<script>
+    jquery.extend({
+        elementSiblings:function(dom){//获取dom元素的所有兄弟元素
+            var siblings=[];
+            var parent=dom.parentNode;
+            var childs=parent.childNodes;//获取所有的子节点
+            for(var i=0;i<childs.length;i++){
+                var child=childs[i];
+                if(child.nodeType==1&&child!=dom){
+                    siblings.push(child);
+                }
+            }
+            return siblings;
+        },
+        nextElementSibling:function(dom){
+            var next=dom.nextSibling;
+            if(next==null) return null;
+            if(next.nodeType==1) return next;
+            return jquery.nextElementSibling(next);
+        }
+    });
+
+    jquery.fn.extend({
+        html:function(arg){
+            //不传参，获取第一个元素的文本
+            if(arg===undefined){//不能用参数的长度判断,传入undefined的时候参数为1
+                return this.get(0).innerHTML;//get方法更加强大
+            }
+            //传参,设置
+            return this.each(function(){
+                this.innerHTML=arg;
+            });
+        },
+        text1:function(text){
+            if(text===undefined){//获取
+                var str=""
+                this.each(function(){
+                    str+=this.innerHTML;
+                });
+                return str;
+            }
+            //设置
+           return this.each(function(){
+                this.innerHTML=text;
+            });
+        },
+        text:function(text){//上面代码的优化;
+            var str='';
+            this.each(function(){
+                if(text===undefined){
+                    str+=this.innerHTML;
+                    return;
+                }
+                this.innerHTML=text;
+            });
+            return text===undefined?str:this;
+        },
+        siblings:function(filter){
+            //两种情况
+            // 一种为假值，获取所有的兄弟元素
+            // 二是根据参数获取指定的兄弟元素，求所有的兄弟元素跟所有的指定元素的交集
+            var $=jquery();
+            this.each(function(){
+                var sibs=jquery.elementSiblings(this);
+                jquery.merge($,sibs);
+            });
+            if(!filter){
+                return $;
+            }
+            var $result=jquery();
+            var doms=[];
+            //进行筛选
+            var $filter=jquery(filter);
+            $.each(function(){
+                var sib=this;
+                $filter.each(function(){
+                    if(sib==this){
+                        doms.push(this);
+                    }
+                });
+            });
+            return jquery.merge($result,doms);
+        },
+        next:function(filter){
+            //获取每一个元素的下一个兄弟元素
+            var $next=jquery();
+            var next=[];
+            this.each(function(){
+               return next.push(jquery.nextElementSibling(this));
+            });
+            jquery.merge($next,next);
+            if(!filter) return $next;
+
+            var arr2=[];
+            var $filter=jquery(filter);
+            $next.each(function(){
+                var next=this;
+                $filter.each(function(){
+                    var filter=this;
+                    if(next==filter){
+                        arr2.push(next);
+                    }
+                });
+            });
+            return jquery.merge(jquery(),arr2);
+        }
+    });
+
+    console.log($("div").html());
+</script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div abc="20">前端</div>
+<div>22期</div>
+<p></p>
+<input type="text" checked=true />
+<script src="js.js"></script>
+<script>
+    jquery.fn.extend({
+        attr:function(){
+            //分析，三种情况
+            var len=arguments.length;
+            var arg0=arguments[0];
+            var arg1=arguments[1];
+            //1.没有参数，返回当前的jQuery对象
+            if(len==0) return this;
+            //2.一个参数，分两种情况，参数类型为字符串，参数类型为对象
+            if(len==1){
+                if(jquery.isString(arg0)){
+                   return this[0].getAttribute(arg0);
+                }
+                   this.each(function(){
+                        var set=this;
+                        jquery.each(arg0,function(key,value){
+                            set.setAttribute(key,value);
+                        });
+                    });
+            }
+            //3.两个参数，设置属性
+            else{
+                this.each(function(){
+                    this.setAttribute(arg0,arg1);
+                });
+            }
+            return this;
+        },
+        prop:function(){
+            //分析三种情况
+            var len=arguments.length;
+            var arg0=arguments[0];
+            var arg1=arguments[1];
+            //没有参数
+            if(len==0) return this;
+            if(len==1){
+                if(jquery.isString(arg0)){
+                    return this[0][arg0];
+                }
+                this.each(function(){
+                    var set=this;
+                    jquery.each(arg0,function(key,value){
+                        set[key]=value;
+                    });
+                });
+            }
+            //3.两个参数，设置属性
+            else{
+                this.each(function(){
+                    this[arg0]=arg1;
+                });
+            }
+            return this;
+        }
+    });
+    console.log($("div"));
+    console.log($("input").attr("checked"));
+    console.log($("input")[0]["checked"]);
+    console.dir($("input")[0]);
+    console.log($("div").attr("selected",true).attr("abc"));
+</script>
+</body>
+</html>
